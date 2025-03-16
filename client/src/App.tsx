@@ -4,7 +4,7 @@ function App() {
       <h1>React Typescript</h1>
 
       <div>
-        <p>REACT</p>
+        <p>REACT WITH DOCKER</p>
       </div>
 
       <footer>Footer</footer>
