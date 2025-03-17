@@ -183,12 +183,42 @@ describe('DELETE_ROUTE', () => {
         await request(app)
           .delete(`/task/${task.id}`)
           .send()
-          .expect(204);
+          .expect(200);
 
         const taskFromDB = await prisma.task.findUnique({
             where: {id: task.id}
         });
 
         expect(taskFromDB).toBeNull();
+    });
+
+    it('DELETE /tasks/:id should delete a task with subtasks', async () => {
+        const task = await createTask();
+
+        const subtask = await createSubtask(task.id);
+
+        await request(app)
+          .delete(`/task/${task.id}`)
+          .send()
+          .expect(200);
+
+        const taskFromDB = await prisma.task.findUnique({
+            where: {id: subtask.id},
+        });
+
+        expect(taskFromDB).toBeNull();
+    });
+
+    it('DELETE /tasks/:id should return task object which was deleted', async () => {
+        const task = await createTask();
+
+        const response = await request(app)
+          .delete(`/task/${task.id}`)
+          .send()
+          .expect(200);
+
+        expect(response.body).toMatchObject(
+            { title, description, id: task.id }
+        );
     });
 });

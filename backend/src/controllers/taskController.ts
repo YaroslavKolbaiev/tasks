@@ -78,11 +78,11 @@ async function updateTask(req: Request<any, any, ValidateRequest>, res: Response
 async function deleteTask(req: Request, res: Response) {
   const { id } = req.params;
 
-  await prisma.task.delete({
+  const task = await prisma.task.delete({
     where: {id: Number(id)}
   });
 
-  res.status(204).end();
+  res.status(200).json(task);
 }
 
 export const taskController = {
