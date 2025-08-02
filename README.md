@@ -1,6 +1,5 @@
 # Task Tracker
 
-Please note env vars are included for the porpuse of this test-task
 
 ## Instruction how to start project
 
